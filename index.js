@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
 	socket.on('new-product', (data) => {
 		products.push(data);
 		io.emit('products', products);
-	});
+	})
 });
 
 

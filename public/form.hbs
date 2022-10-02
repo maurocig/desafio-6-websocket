@@ -1,11 +1,11 @@
 <h1>{{title}}</h1>
 <form action="/productos" method="post">
 	<label for="title">Nombre</label>
-	<input type="text" style="display: block;" name="title">
+	<input id="input-name" type="text" style="display: block;" name="title">
 	<label for="price">Precio</label>
-	<input type="number" style="display: block;" name="price">
+	<input id="input-price" type="number" style="display: block;" name="price">
 	<label for="thumbnail">Imagen{{jeje}}</label>
-	<input type="text" style="display: block;" name="thumbnail">
+	<input id="input-thumbnail" type="text" style="display: block;" name="thumbnail">
 	<button type="submit" style="margin-top: 2rem">Enviar</button>
 </form>
 <a href="/productos">Ver productos</a>
