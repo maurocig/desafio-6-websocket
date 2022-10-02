@@ -10,25 +10,12 @@
 </head>
 
 <body>
+	{{> form}}
 
+	{{> products}}
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="../../public/main.js"></script>
 </body>
 
 </html>
-{{!-- {{> head}} --}}
-{{#if mostrarProductos}}
-<h1>Todos los productos</h1>
-<a href="/">Agregar producto</a>
-<div>
-	{{> products}}
-</div>
-{{/if}}
-
-{{#if mostrarForm}}
-<div>
-	{{> form}}
-</div>
-{{/if}}
-
-{{#if mostrarDetalle}}
-{{> itemDetail}}
-{{/if}}
