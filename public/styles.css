@@ -7,6 +7,14 @@ form input {
 	margin-bottom: 1rem;
 }
 
+#chat-form #text-area-input {
+	display: block;
+}
+
+#chat-form button {
+	margin-top: 1rem;
+}
+
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	/* background-color: red; */

@@ -47,6 +47,8 @@ const products = [
 	}
 ]
 
+const messages = [];
+
 // Listen
 httpServer.listen(PORT, () => {
 	console.log('Server running on port', PORT);
@@ -56,13 +58,20 @@ httpServer.listen(PORT, () => {
 io.on('connection', (socket) => {
 	console.log('nuevo cliente conectado');
 	console.log(socket.id);
+
 	socket.emit('products', [...products]);
+	socket.emit('messages', [...messages]);
 
 	socket.on('new-product', (data) => {
 		const lastIndex = products.length - 1;
 		data.id = lastIndex + 1;
 		products.push(data);
 		io.emit('products', products);
+	})
+
+	socket.on('new-message', (data) => {
+		messages.push(data);
+		io.emit('messages', messages);
 	})
 });
 

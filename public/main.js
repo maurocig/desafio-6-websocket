@@ -2,41 +2,20 @@ const socket = io();
 
 const div = document.querySelector('#container-table');
 const form = document.querySelector('#container-form');
-
-// form.addEventListener('submit', () => {
-// 	form.preventDefault();
-// })
-
-// const handlebars = require('handlebars');
+const chat = document.querySelector('#container-chat');
 
 
-async function renderForm(file, obj) {
-	try {
-		const data = await fetch(`http://localhost:8080/${file}`);
-		const parsedData = await data.text();
-		template = await Handlebars.compile(parsedData);
-		const html = await template(obj);
-		console.log(html)
-		form.innerHTML = html;
-	} catch (error) {
-		console.error(error.message);
-	}
-}
 
 async function render(file, obj, target) {
-	// try {
 	const data = await fetch(`http://localhost:8080/${file}`);
 	const parsedData = await data.text();
-	template = await Handlebars.compile(parsedData);
+	template = Handlebars.compile(parsedData);
 	const html = await template(obj);
 	target.innerHTML = html;
-	// } catch (error) {
-	// console.error(error.message);
-	// }
 }
 
 
-render('form.hbs', { title: 'Ingresar nuevo producto' }, form)
+render('form.hbs', { title: 'Ingresar nuevo producto' }, form);
 
 form.addEventListener('submit', (e) => {
 	const inputName = document.querySelector('#input-name');
@@ -44,17 +23,34 @@ form.addEventListener('submit', (e) => {
 	const inputThumbnail = document.querySelector('#input-thumbnail');
 
 	e.preventDefault();
-	console.log(e.target)
 	const newProduct = {
 		title: inputName.value,
 		price: inputPrice.value,
 		thumbnail: inputThumbnail.value
 	}
+	console.log(newProduct);
+
 	socket.emit('new-product', newProduct)
 })
 
+chat.addEventListener('submit', (e) => {
+	const emailInput = document.querySelector('#email-input');
+	const messageInput = document.querySelector('#text-area-input');
+	e.preventDefault();
+	const newMessage = {
+		email: emailInput.value,
+		message: messageInput.value
+	}
+	socket.emit('new-message', newMessage);
+})
+
+
 socket.on('products', async (products) => {
 	await render('products.hbs', { products }, div);
+})
+
+socket.on('messages', async (messages) => {
+	await render('chat.hbs', { messages }, chat);
 })
 
 
