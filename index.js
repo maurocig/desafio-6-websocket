@@ -34,11 +34,13 @@ app.use(express.static(__dirname + "/public"));
 
 const products = [
 	{
+		id: 0,
 		title: 'Perro',
 		price: 200,
 		thumbnail: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg'
 	},
 	{
+		id: 1,
 		title: 'Gato',
 		price: 100,
 		thumbnail: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_3x2.jpg'
@@ -57,6 +59,8 @@ io.on('connection', (socket) => {
 	socket.emit('products', [...products]);
 
 	socket.on('new-product', (data) => {
+		const lastIndex = products.length - 1;
+		data.id = lastIndex + 1;
 		products.push(data);
 		io.emit('products', products);
 	})
